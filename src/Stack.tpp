@@ -36,7 +36,7 @@ namespace NutnDS_Stack
     template <typename T>
     const bool Stack<T>::push(T& data)
     {
-        this->data.addData(data);
+        return this->data.addData(data);
     }
 
     // Method.

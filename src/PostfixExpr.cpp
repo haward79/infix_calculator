@@ -23,7 +23,7 @@ namespace NutnDS_PostfixExpr
     // Mutator.
     bool PostfixExpr::setExpr(const ExprTokens& expr)
     {
-        this->expr = new ExprTokens(expr);
+        return this->expr = new ExprTokens(expr);
     }
 
     // Method.
