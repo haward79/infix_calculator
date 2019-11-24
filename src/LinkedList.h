@@ -3,10 +3,11 @@
     #define LinkedList_h
 
     #include <iostream>
+    #include "OutOfIndexException.h"
 
     using std::cout;
 
-    namespace NutnDS_LinkedList
+    namespace NutnDS
     {
         template <typename T>
         class Node
@@ -64,6 +65,10 @@
                 // Variable.
                 int size;
                 Node<T>* firstNode;
+                
+                // Method.
+                Node<T>& getNode() const;
+                Node<T>& getNode(int) const;
         };
     }
 

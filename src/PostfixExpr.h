@@ -8,10 +8,10 @@
     #include "Stack.h"
 
     using std::string;
-    using NutnDS_ExprTokens::ExprTokens;
-    using NutnDS_Stack::Stack;
+    using NutnDS::ExprTokens;
+    using NutnDS::Stack;
 
-    namespace NutnDS_PostfixExpr
+    namespace NutnDS
     {
         class PostfixExpr
         {

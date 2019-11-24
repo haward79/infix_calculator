@@ -1,17 +1,14 @@
-#include "StringManip.h"
 #include "InfixExpr.h"
 
-using namespace NutnDS_StringManip;
-
-namespace NutnDS_InfixExpr
+namespace NutnDS
 {
     // Constructor.
-    InfixExpr::InfixExpr() : expr(nullptr)
+    InfixExpr::InfixExpr() : expr(new ExprTokens)
     {
         // Empty.
     }
 
-    InfixExpr::InfixExpr(string expr) : expr(&splitToTokens(formatExpr(expr)))
+    InfixExpr::InfixExpr(string expr) : expr(&splitToTokens(expr))
     {
         // Empty.
     }
@@ -24,8 +21,7 @@ namespace NutnDS_InfixExpr
     // Destructor.
     InfixExpr::~InfixExpr()
     {
-        if(expr)
-            delete expr;
+        delete expr;
     }
 
     // Mutator.
@@ -36,6 +32,7 @@ namespace NutnDS_InfixExpr
         if(formatted != "")
         {
             this->expr = &splitToTokens(formatted);
+            
             return true;
         }
         else
@@ -201,7 +198,7 @@ namespace NutnDS_InfixExpr
             else if(ExprTokens::getOperatorOrder(token) >= 0)  // Operator.
             {
                 // Pop low precedence operators.
-                while(ExprTokens::getOperatorOrder(st.peek()) >= ExprTokens::getOperatorOrder(token))
+                while(st.getSize()>0 && ExprTokens::getOperatorOrder(st.peek())>=ExprTokens::getOperatorOrder(token))
                     postfix.addToken(st.pop());
 
                 st.push(token);

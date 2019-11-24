@@ -5,14 +5,14 @@
     #include <iostream>
     #include <iomanip>
     #include <string>
+    #include "LinkedList.h"
     #include "StringManip.h"
     #include "OutOfIndexException.h"
 
     using std::cout;
     using std::string;
-    using namespace NutnDS_StringManip;
 
-    namespace NutnDS_ExprTokens
+    namespace NutnDS
     {
         // Data type.
         typedef enum {unknown, posInteger, float_, operator_, parentheses} ExprTokenType;
@@ -20,16 +20,18 @@
         class ExprTokens
         {
             public:
-                // Constant.
-                static const int kMaxToken = 100;
-
                 // Constructor.
                 ExprTokens();
                 ExprTokens(const ExprTokens&);
 
+                // Destructor.
+                ~ExprTokens();
+
                 // Accessor.
-                int getSize() const { return size; }
+                int getSize() const { return tokens.getSize(); }
+                string getToken() const;
                 string getToken(int) const;
+                ExprTokenType getType() const;
                 ExprTokenType getType(int) const;
 
                 // Mutator.
@@ -49,9 +51,8 @@
 
             private:
                 // Variable.
-                int size;
-                string tokens[kMaxToken];
-                ExprTokenType types[kMaxToken];
+                LinkedList<string>& tokens;
+                LinkedList<ExprTokenType>& types;
         };
     }
 

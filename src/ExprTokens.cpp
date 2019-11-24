@@ -1,29 +1,35 @@
 #include "ExprTokens.h"
 
-namespace NutnDS_ExprTokens
+namespace NutnDS
 {
     // Constructor.
-    ExprTokens::ExprTokens() : size(0)
+    ExprTokens::ExprTokens() : tokens(*(new LinkedList<string>)), types(*(new LinkedList<ExprTokenType>))
     {
         // Empty.
     }
 
-    ExprTokens::ExprTokens(const ExprTokens& obj)
+    ExprTokens::ExprTokens(const ExprTokens& obj) : tokens(*(new LinkedList<string>(&obj.tokens))), types(*(new LinkedList<ExprTokenType>(&obj.types)))
     {
-        size = obj.size;
+        // Empty.
+    }
 
-        for(int i=0; i<size; ++i)
-        {
-            tokens[i] = obj.tokens[i];
-            types[i] = obj.types[i];
-        }
+    // Destructor.
+    ExprTokens::~ExprTokens()
+    {
+        delete &tokens;
+        delete &types;
     }
 
     // Accessor.
+    string ExprTokens::getToken() const
+    {
+        return getToken(tokens.getSize()-1);
+    }
+
     string ExprTokens::getToken(int index) const
     {
-        if(index>=0 && index<size)
-            return tokens[index];
+        if(index>=0 && index<tokens.getSize())
+            return tokens.getData(index);
         else
         {
             throw OutOfIndexException(index);
@@ -31,10 +37,15 @@ namespace NutnDS_ExprTokens
         }
     }
 
+    ExprTokenType ExprTokens::getType() const
+    {
+        return getType(tokens.getSize()-1);
+    }
+
     ExprTokenType ExprTokens::getType(int index) const
     {
-        if(index>=0 && index<size)
-            return types[index];
+        if(index>=0 && index<tokens.getSize())
+            return types.getData(index);
         else
         {
             throw OutOfIndexException(index);
@@ -45,37 +56,26 @@ namespace NutnDS_ExprTokens
     // Mutator.
     bool ExprTokens::addToken(string token)
     {
-        if(size < kMaxToken)
-        {
-            tokens[size] = token;
-            types[size] = whichType(token);
-            ++size;
-
-            return true;
-        }
-        else
-            return false;
+        return addToken(tokens.getSize(), token);
     }
 
     bool ExprTokens::addToken(int index, string token)
     {
-        if(index>=0 && index<=size && size<kMaxToken)
+        if(index>=0 && index<=tokens.getSize())
         {
-            if(index == size)
-                return addToken(token);
-            else
+            bool status = false;
+            
+            status = tokens.addData(index, token);
+            
+            if(status)
             {
-                for(int i=size; i>index; ++i)
-                {
-                    token[i] = token[i-1];
-                    types[i] = types[i-1];
-                }
+                status = types.addData(index, whichType(token));
 
-                tokens[index] = token;
-                types[index] = whichType(token);
-
-                return true;
+                if(!status)
+                    tokens.removeData(index);
             }
+
+            return status;
         }
         else
             return false;
@@ -83,30 +83,15 @@ namespace NutnDS_ExprTokens
 
     bool ExprTokens::removeToken()
     {
-        /*
-         *  Remove last token from token array.
-         */
-
-        if(size > 0)
-        {
-            --size;
-            return true;
-        }
-        else
-            return false;
+        return removeToken(tokens.getSize()-1);
     }
 
     bool ExprTokens::removeToken(int index)
     {
-        if(index>=0 && index<size)
+        if(index>=0 && index<tokens.getSize())
         {
-            // Move data forward after deleted data.
-            for(int i=index+1; i<size; ++i)
-            {
-                tokens[i-1] = tokens[i];
-                types[i-1] = types[i];
-            }
-            --size;
+            tokens.removeData(index);
+            types.removeData(index);
 
             return true;
         }
@@ -117,15 +102,16 @@ namespace NutnDS_ExprTokens
     // Method.
     void ExprTokens::clear()
     {
-        size = 0;
+        tokens.clear();
+        types.clear();
     }
 
     void ExprTokens::print() const
     {
-        cout << "\n>> " << std::to_string(size) << " tokens in total\n";
+        cout << "\n>> " << std::to_string(tokens.getSize()) << " tokens in total\n";
 
-        for(int i=0; i<size; ++i)
-            cout << std::setw(10) << std::left << tokens[i] << " | " << NutnDS_ExprTokens::ExprTokens::getTypeName(types[i]) << "\n";
+        for(int i=0; i<tokens.getSize(); ++i)
+            cout << std::setw(10) << std::left << tokens.getData(i) << " | " << ExprTokens::getTypeName(types.getData(i)) << "\n";
 
         cout << "\n";
     }
@@ -135,8 +121,8 @@ namespace NutnDS_ExprTokens
         string expr = "";
 
         // Generate expression by tokens.
-        for(int i=0; i<size; ++i)
-            expr += tokens[i];
+        for(int i=0; i<tokens.getSize(); ++i)
+            expr += tokens.getData(i);
 
         return expr;
     }
@@ -146,8 +132,8 @@ namespace NutnDS_ExprTokens
         string expr = "";
 
         // Generate expression by tokens.
-        for(int i=0; i<size; ++i)
-            expr += " " + tokens[i];
+        for(int i=0; i<tokens.getSize(); ++i)
+            expr += " " + tokens.getData(i);
 
         // Remove first space char.
         if(expr != "")

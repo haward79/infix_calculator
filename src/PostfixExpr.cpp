@@ -1,9 +1,9 @@
 #include "PostfixExpr.h"
 
-namespace NutnDS_PostfixExpr
+namespace NutnDS
 {
     // Constructor.
-    PostfixExpr::PostfixExpr() : expr(nullptr)
+    PostfixExpr::PostfixExpr() : expr(new ExprTokens)
     {
         // Empty.
     }
@@ -16,8 +16,7 @@ namespace NutnDS_PostfixExpr
     // Destructor.
     PostfixExpr::~PostfixExpr()
     {
-        if(expr)
-            delete expr;
+        delete expr;
     }
 
     // Mutator.
@@ -40,7 +39,7 @@ namespace NutnDS_PostfixExpr
         {
             switch(expr->getType(0))
             {
-                case NutnDS_ExprTokens::ExprTokenType::operator_:  // Operator.
+                case ExprTokenType::operator_:  // Operator.
                     num1 = std::stod(st.pop());
                     num2 = std::stod(st.pop());
                     

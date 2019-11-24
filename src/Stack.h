@@ -6,9 +6,9 @@
     #include "LinkedList.h"
 
     using std::cout;
-    using NutnDS_LinkedList::LinkedList;
+    using NutnDS::LinkedList;
 
-    namespace NutnDS_Stack
+    namespace NutnDS
     {
         template <typename T>
         class Stack
@@ -16,6 +16,7 @@
             public:
                 // Constructor.
                 Stack();
+                Stack(const Stack&);
 
                 // Destructor.
                 ~Stack();

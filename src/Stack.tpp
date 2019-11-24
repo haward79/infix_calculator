@@ -1,12 +1,22 @@
 #include "Stack.h"
 
-namespace NutnDS_Stack
+namespace NutnDS
 {
     // Constructor.
     template <typename T>
     Stack<T>::Stack() : data(*(new LinkedList<T>))
     {
         // Empty.
+    }
+
+    template <typename T>
+    Stack<T>::Stack(const Stack& obj)
+    {
+        /*
+         *  Copy constructor.
+         */
+
+        data = *(new LinkedList<T>(&obj.data));
     }
 
     // Destructor.
@@ -28,6 +38,7 @@ namespace NutnDS_Stack
     const T& Stack<T>::pop()
     {
         T& value = *(new T(data.getData()));
+        
         data.removeData();
 
         return value;

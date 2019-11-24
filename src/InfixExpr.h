@@ -4,6 +4,7 @@
     
     #include <iostream>
     #include <string>
+    #include "StringManip.h"
     #include "ExprTokens.h"
     #include "Stack.h"
     #include "InvalidCharInExprException.h"
@@ -11,10 +12,10 @@
     using std::cout;
     using std::cin;
     using std::string;
-    using NutnDS_ExprTokens::ExprTokens;
-    using NutnDS_Stack::Stack;
+    using NutnDS::ExprTokens;
+    using NutnDS::Stack;
 
-    namespace NutnDS_InfixExpr
+    namespace NutnDS
     {
         class InfixExpr
         {

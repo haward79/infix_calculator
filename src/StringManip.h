@@ -6,7 +6,7 @@
 
     using std::string;
 
-    namespace NutnDS_StringManip
+    namespace NutnDS
     {
         bool isDigit(char);
         bool isAlpha(char);
