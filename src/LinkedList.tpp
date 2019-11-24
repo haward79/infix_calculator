@@ -154,7 +154,7 @@ namespace NutnDS
     template <typename T>
     bool LinkedList<T>::removeData()
     {
-        removeData(size-1);
+        return removeData(size-1);
     }
 
     template <typename T>
