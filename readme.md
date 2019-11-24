@@ -2,14 +2,14 @@
 This is an infix expression calculator.
 
 # How does it work ?
-The program reads an infix expression which contains addition, substraction, multiplication, division, remainder, power, parentheses and space as input.
+The program reads an infix expression which contains addition, subtraction, multiplication, division, remainder, power, parentheses and space as input.
 
 Then, the infix expression is converted to postfix expression.
 
 Finally, the postfix expression converted by infix is interpreted and evaluated.
 
 # In details
-Following function or syntax are able to prrint details during program executing.
+Following function or syntax are able to print details during program executing.
 
     /*
      *  'infix' is a object name of InfixExpr type.
@@ -41,7 +41,7 @@ Compile this program by using the following command in cmd, powershell, or termi
 
     # Compile codes in src folder. (Using g++ for example.)
     # Replace [program_name] with any filename you want.
-    > g++ src/* -o [program_name].exe
+    > g++ src/*.cpp -o [program_name].exe
 
     # Run program.
     > [program_name]
@@ -52,7 +52,7 @@ Compile this program by using the following command in cmd, powershell, or termi
 
     # Compile codes in src folder. (Using g++ for example.)
     # Replace [program_name] with any filename you want.
-    $ g++ src/* -o [program_name]
+    $ g++ src/*.cpp -o [program_name]
 
     # Run program.
     $ ./[program_name]
